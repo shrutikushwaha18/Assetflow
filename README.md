@@ -15,4 +15,4 @@ AssetFlow is a MERN-based Enterprise Asset & Resource Management System with mod
 	- Email: admin@assetflow.test
 	- Password: AdminPass123!
 
-If the backend port 5005 is in use the server will auto-increment to the next available port (5006, 5007, ...). The frontend reads API base from `VITE_API` in `client/.env` (set to http://localhost:5005 by default).
+If the backend port 3000 is in use the server will auto-increment to the next available port (5006, 5007, ...). The frontend reads API base from `VITE_API` in `client/.env` (set to http://localhost:3000 by default).
