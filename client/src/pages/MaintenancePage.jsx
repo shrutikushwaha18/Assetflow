@@ -1,13 +1,12 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+import api from '../services/api';
 
 const MaintenancePage = () => {
   const [requests, setRequests] = useState([]);
   const [form, setForm] = useState({ description: '', priority: 'Medium' });
 
   const fetchRequests = async () => {
-    const token = localStorage.getItem('token');
-    const res = await axios.get('/api/maintenance', { headers: { Authorization: `Bearer ${token}` } });
+    const res = await api.get('/api/maintenance');
     setRequests(res.data);
   };
 
@@ -17,8 +16,7 @@ const MaintenancePage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const token = localStorage.getItem('token');
-    await axios.post('/api/maintenance', { ...form, asset: '000000000000000000000000', requestedBy: '000000000000000000000000' }, { headers: { Authorization: `Bearer ${token}` } });
+    await api.post('/api/maintenance', { ...form, asset: '000000000000000000000000', requestedBy: '000000000000000000000000' });
     setForm({ description: '', priority: 'Medium' });
     fetchRequests();
   };

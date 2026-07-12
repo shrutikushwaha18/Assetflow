@@ -1,15 +1,12 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+import api from '../services/api';
 
 const BookingPage = () => {
   const [bookings, setBookings] = useState([]);
   const [form, setForm] = useState({ resourceName: '', startTime: '', endTime: '' });
 
   const fetchBookings = async () => {
-    const token = localStorage.getItem('token');
-    const API = import.meta.env.VITE_API || '';
-    const url = API ? `${API}/api/bookings` : '/api/bookings';
-    const res = await axios.get(url, { headers: { Authorization: `Bearer ${token}` } });
+    const res = await api.get('/api/bookings');
     setBookings(res.data);
   };
 
@@ -19,10 +16,7 @@ const BookingPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const token = localStorage.getItem('token');
-    const API = import.meta.env.VITE_API || '';
-    const url = API ? `${API}/api/bookings` : '/api/bookings';
-    await axios.post(url, { ...form, bookedBy: '000000000000000000000000' }, { headers: { Authorization: `Bearer ${token}` } });
+    await api.post('/api/bookings', { ...form, bookedBy: '000000000000000000000000' });
     setForm({ resourceName: '', startTime: '', endTime: '' });
     fetchBookings();
   };

@@ -1,15 +1,12 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+import api from '../services/api';
 
 const AssetsPage = () => {
   const [assets, setAssets] = useState([]);
   const [form, setForm] = useState({ name: '', category: '', location: '', condition: 'Good' });
 
   const fetchAssets = async () => {
-    const token = localStorage.getItem('token');
-    const API = import.meta.env.VITE_API || '';
-    const url = API ? `${API}/api/assets` : '/api/assets';
-    const res = await axios.get(url, { headers: { Authorization: `Bearer ${token}` } });
+    const res = await api.get('/api/assets');
     setAssets(res.data);
   };
 
@@ -19,10 +16,7 @@ const AssetsPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const token = localStorage.getItem('token');
-    const API = import.meta.env.VITE_API || '';
-    const url = API ? `${API}/api/assets` : '/api/assets';
-    await axios.post(url, form, { headers: { Authorization: `Bearer ${token}` } });
+    await api.post('/api/assets', form);
     setForm({ name: '', category: '', location: '', condition: 'Good' });
     fetchAssets();
   };

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import axios from 'axios';
+import api from '../services/api';
 
 const LoginPage = () => {
   const [form, setForm] = useState({ email: '', password: '' });
@@ -7,9 +7,7 @@ const LoginPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const API = import.meta.env.VITE_API || '';
-      const url = API ? `${API}/api/auth/login` : '/api/auth/login';
-      const res = await axios.post(url, form);
+      const res = await api.post('/api/auth/login', form);
       localStorage.setItem('token', res.data.token);
       window.location.href = '/';
     } catch (error) {

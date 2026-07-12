@@ -1,8 +1,10 @@
 import fetch from 'node-fetch';
 
+const API_BASE = process.env.API_URL || 'http://localhost:5000';
+
 const doLogin = async () => {
   try {
-    const res = await fetch('http://localhost:5005/api/auth/login', {
+    const res = await fetch(`${API_BASE}/api/auth/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email: 'admin@assetflow.test', password: 'AdminPass123!' })

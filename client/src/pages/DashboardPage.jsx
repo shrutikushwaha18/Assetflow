@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+import api from '../services/api';
 
 const cards = [
   { title: 'Assets Available', key: 'available' },
@@ -14,10 +14,7 @@ const DashboardPage = () => {
   const [stats, setStats] = useState({});
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    const API = import.meta.env.VITE_API || '';
-    const url = API ? `${API}/api/dashboard` : '/api/dashboard';
-    axios.get(url, { headers: { Authorization: `Bearer ${token}` } }).then((res) => setStats(res.data));
+    api.get('/api/dashboard').then((res) => setStats(res.data));
   }, []);
 
   return (

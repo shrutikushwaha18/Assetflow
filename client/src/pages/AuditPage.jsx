@@ -1,15 +1,12 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+import api from '../services/api';
 
 const AuditPage = () => {
   const [audits, setAudits] = useState([]);
   const [form, setForm] = useState({ title: '', location: '' });
 
   const fetchAudits = async () => {
-    const token = localStorage.getItem('token');
-    const API = import.meta.env.VITE_API || '';
-    const url = API ? `${API}/api/audits` : '/api/audits';
-    const res = await axios.get(url, { headers: { Authorization: `Bearer ${token}` } });
+    const res = await api.get('/api/audits');
     setAudits(res.data);
   };
 
@@ -19,10 +16,7 @@ const AuditPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const token = localStorage.getItem('token');
-    const API = import.meta.env.VITE_API || '';
-    const url = API ? `${API}/api/audits` : '/api/audits';
-    await axios.post(url, form, { headers: { Authorization: `Bearer ${token}` } });
+    await api.post('/api/audits', form);
     setForm({ title: '', location: '' });
     fetchAudits();
   };
